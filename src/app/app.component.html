@@ -1,0 +1,19 @@
+<div class="layout-box">
+  <div class="top-bar">
+    <h1>Welcome to Payment Portal</h1>
+  </div>
+
+  <div *ngIf="show" class="btn-payment-page">
+    <button mat-raised-button
+      color="primary"
+      (click)="showPaymentPage()"
+      class="btn-size">
+      <mat-icon>forward</mat-icon>
+      Click here to continue with your payment
+    </button>
+  </div>
+
+  <div *ngIf="!show" class="page-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

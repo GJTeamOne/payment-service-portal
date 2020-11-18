@@ -1,0 +1,72 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title class="card-header">Pay Invoice</mat-card-title>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+  <mat-card-content class="card-content">
+    <form class="payment-form" [formGroup]="paymentDataForm" (ngSubmit)="submit()">
+      <!-- Credit Card Input Field-->
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label> Credit Card Number </mat-label>
+        <input matInput type="number" formControlName="creditCardNumber" required>
+        <mat-error *ngIf="paymentDataForm.controls.creditCardNumber.touched && paymentDataForm.controls.creditCardNumber.invalid">
+          <span *ngIf="paymentDataForm.controls.creditCardNumber.errors.required">This field is mandatory.</span>
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Cardholder Name Input Field-->
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label> Cardholder Name</mat-label>
+        <input matInput formControlName="cardholder" required>
+        <mat-error *ngIf="paymentDataForm.controls.cardholder.touched && paymentDataForm.controls.cardholder.invalid">
+          <span *ngIf="paymentDataForm.controls.cardholder.errors.required">This field is mandatory.</span>
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Card Expiry Date Input Field-->
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Card Expiry Date</mat-label>
+        <input matInput [matDatepicker]="ced" [min]="minDate" formControlName="expirationDate" required>
+        <mat-datepicker-toggle matSuffix [for]="ced"></mat-datepicker-toggle>
+        <mat-datepicker #ced startView="multi-year"></mat-datepicker>
+        <mat-error *ngIf="paymentDataForm.controls.expirationDate.touched && paymentDataForm.controls.expirationDate.invalid">
+          <span *ngIf="paymentDataForm.controls.expirationDate.errors.required">This field is mandatory.</span>
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Security Code Input Field-->
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label> CVC (3 Digit Code / Optional)</mat-label>
+        <input type="number" matInput formControlName="securityCode">
+        <mat-error *ngIf="paymentDataForm.controls.securityCode.invalid">
+          <span>Please input 3 digit only.</span>
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Amount Input Field-->
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label> Payment Amount</mat-label>
+        <input type="number" matInput formControlName="amount" oninput="this.value =
+        !!this.value && Math.abs(this.value) > 0 ? Math.abs(this.value) : null">
+        <mat-error *ngIf="paymentDataForm.controls.amount.invalid">
+          <span *ngIf="paymentDataForm.controls.amount.errors.min">Please input amount greater that 0.</span>
+          <span *ngIf="paymentDataForm.controls.amount.errors.required">This field is mandatory.</span>
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Submit Button -->
+      <div class="btn-container">
+        <button mat-raised-button
+            color="primary"
+            class="btn-size"
+            type="submit">
+            <mat-icon>lock</mat-icon>
+            Click here to submit your payment
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+
+
